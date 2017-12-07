@@ -1,7 +1,15 @@
 package main
 
-import "log"
+import (
+	"io"
+	"net/http"
+)
+
+func hello(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Why hallo thar\n")
+}
 
 func main() {
-	log.Println("asdasd")
+	http.HandleFunc("/", hello)
+	http.ListenAndServe(":8000", nil)
 }
