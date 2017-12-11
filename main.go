@@ -72,7 +72,7 @@ func init() {
 	flag.StringVar(&outDir, "o", "", "Path to the output directory.")
 	flag.BoolVar(&serverMode, "serve", false, "Start in server mode.")
 	flag.StringVar(&addr, "address", "127.0.0.1", "Address to listen on while in server mode.")
-	flag.StringVar(&port, "port", "1443", "Port to listen on while in server mode.")
+	flag.StringVar(&port, "port", "80", "Port to listen on while in server mode.")
 	flag.Parse()
 
 	matchedPath = path.Join(outDir, matched)
