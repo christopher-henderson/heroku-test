@@ -272,7 +272,7 @@ type SimpleEntry struct {
 func ListCertdata(w http.ResponseWriter, req *http.Request) {
 	defer func() {
 		if err := recover(); err != nil {
-			w.WriteHeader(500)
+			w.WriteHeader(http.StatusBadGateway)
 			w.Write([]byte(err.(string)))
 		}
 	}()
@@ -284,17 +284,17 @@ func ListCertdata(w http.ResponseWriter, req *http.Request) {
 	log.Printf("ListCertdata, IP: %v, certdata.txt URL: %v\n", req.RemoteAddr, url)
 	stream, err := getFromURL(url)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Sprintln(err.Error())))
 		log.Printf("ListCertdata, IP: %v, Error: %v\n", req.RemoteAddr, err)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	defer stream.Close()
 	c, err := certdata.ParseToNormalizedForm(stream)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Sprintln(err.Error())))
 		log.Printf("ListCertdata, IP: %v, Error: %v\n", req.RemoteAddr, err)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	resp := make([]SimpleEntry, len(c))
@@ -302,9 +302,9 @@ func ListCertdata(w http.ResponseWriter, req *http.Request) {
 		resp = append(resp, SimpleEntry{e.PEM, e.Fingerprint, e.TrustEmail, e.TrustWeb})
 	}
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Sprintln(err.Error())))
 		log.Printf("ListCertdata, IP: %v, Error: %v\n", req.RemoteAddr, err)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
