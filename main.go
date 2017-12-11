@@ -336,7 +336,7 @@ func serve() {
 	// Start up the server.
 	address := fmt.Sprintf("%v:%v", addr, port)
 	log.Printf("Listening on %v\n", address)
-	log.Fatal(http.ListenAndServe("127.0.0.1", cert, private, nil))
+	log.Fatal(http.ListenAndServe("127.0.0.1", nil))
 }
 
 func main() {
