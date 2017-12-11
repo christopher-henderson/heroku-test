@@ -1,1 +1,1 @@
-web: certdataDiffCCADB
+web: certdataDiffCCADB --serve
