@@ -166,7 +166,7 @@ func ListCertdata(w http.ResponseWriter, req *http.Request) {
 	defer func() {
 		if err := recover(); err != nil {
 			w.WriteHeader(http.StatusBadGateway)
-			w.Write([]byte(err.(string)))
+			w.Write([]byte(fmt.Sprintf("%v\n", err)))
 		}
 	}()
 	q := req.URL.Query()
@@ -208,10 +208,9 @@ func serve() {
 	// Add handlers.
 	http.HandleFunc("/certdata", ListCertdata)
 	// Start up the server.
-	p := os.Getenv("PORT")
-	address := fmt.Sprintf("%v:%v", "", p)
-	log.Printf("Listening on %v\n", address)
-	log.Fatal(http.ListenAndServe(address, nil))
+	port := fmt.Sprintf(":%v", os.Getenv("PORT"))
+	log.Printf("Listening on port %v\n", port)
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 // Runner functions for either single run mode or server mode.
