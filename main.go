@@ -270,6 +270,12 @@ type SimpleEntry struct {
 
 // ListCertdata returns to the client a JSON array of SimpleEntry
 func ListCertdata(w http.ResponseWriter, req *http.Request) {
+	defer func() {
+		if err := recover(); err != nil {
+			w.WriteHeader(500)
+			w.Write([]byte(err.Error()))
+		}
+	}()
 	q := req.URL.Query()
 	url := certdataURL
 	if u, ok := q["url"]; ok && len(u) > 0 {
