@@ -273,7 +273,7 @@ func ListCertdata(w http.ResponseWriter, req *http.Request) {
 	defer func() {
 		if err := recover(); err != nil {
 			w.WriteHeader(500)
-			w.Write([]byte(err.Error()))
+			w.Write([]byte(err))
 		}
 	}()
 	q := req.URL.Query()
