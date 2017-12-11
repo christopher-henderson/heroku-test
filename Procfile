@@ -1,1 +1,1 @@
-web: thing
+web: main
