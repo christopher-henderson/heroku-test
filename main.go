@@ -340,7 +340,8 @@ func serve() {
 	log.Printf("Generating new TLS certificate.")
 	GenerateTLSCertOrDie(public, private, cert)
 	// Start up the server.
-	address := fmt.Sprintf("%v:%v", addr, port)
+	p := os.Getenv("PORT")
+	address := fmt.Sprintf("%v:%v", addr, p)
 	log.Printf("Listening on %v\n", address)
 	log.Fatal(http.ListenAndServe(address, nil))
 }
