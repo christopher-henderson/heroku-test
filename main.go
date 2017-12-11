@@ -307,7 +307,6 @@ func ListCertdata(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	w.WriteHeader(http.StatusOK)
 }
 
 // Runner functions for either single run mode or server mode.
